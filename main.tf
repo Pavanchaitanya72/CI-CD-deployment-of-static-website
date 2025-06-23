@@ -2,16 +2,16 @@ terraform{
   backend "s3" {
     bucket = "terraformawsusecase"
     key = "backend"
-    region = "us-west-2"
+    region = "eu-north-1"
   }
 }
 provider "aws" {
-  region = "us-west-2" 
+  region = "eu-north-1" 
 }
 
 # Define the S3 bucket
 resource "aws_s3_bucket" "my_terraform_bucket" {
-  bucket = "bhavuma2025" 
+  bucket = "my-automate-website" 
 
   website {
     index_document = "index.html"
@@ -59,7 +59,7 @@ resource "aws_s3_object" "index_html" {
 
 # CodeBuild Role
 resource "aws_iam_role" "codebuild_role" {
-  name = "CodeBuildServiceRole"
+  name = "awscodebuildservicerole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -95,7 +95,7 @@ resource "aws_iam_role_policy" "codebuild_policy" {
 
 # CodeDeploy Role
 resource "aws_iam_role" "codedeploy_role" {
-  name = "CodeDeployServiceRole"
+  name = "awscodedeployservicerole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -130,7 +130,7 @@ resource "aws_iam_role_policy" "codedeploy_policy" {
 
 # CodePipeline Role
 resource "aws_iam_role" "codepipeline_role" {
-  name = "CodePipelineServiceRole"
+  name = "awscodepipelineservicerole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
