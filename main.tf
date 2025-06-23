@@ -59,7 +59,7 @@ resource "aws_s3_object" "index_html" {
 
 # CodeBuild Role
 resource "aws_iam_role" "codebuild_role" {
-  name = "awscodebuildservicerole"
+  name = "CodeBuildServiceRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -95,7 +95,7 @@ resource "aws_iam_role_policy" "codebuild_policy" {
 
 # CodeDeploy Role
 resource "aws_iam_role" "codedeploy_role" {
-  name = "awscodedeployservicerole"
+  name = "CodeDeployServiceRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -130,7 +130,7 @@ resource "aws_iam_role_policy" "codedeploy_policy" {
 
 # CodePipeline Role
 resource "aws_iam_role" "codepipeline_role" {
-  name = "awscodepipelineservicerole"
+  name = "CodePipelineServiceRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
