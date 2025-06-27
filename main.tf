@@ -92,40 +92,6 @@ resource "aws_iam_role_policy" "codebuild_policy" {
   })
 }
 
-# CodeDeploy Role
-resource "aws_iam_role" "codedeploy_role" {
-  name = "CodeDeployServiceRole"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Effect = "Allow",
-      Principal = {
-        Service = "codedeploy.amazonaws.com"
-      },
-      Action = "sts:AssumeRole"
-    }]
-  })
-}
-
-resource "aws_iam_role_policy" "codedeploy_policy" {
-  name   = "CodeDeployPolicy"
-  role   = aws_iam_role.codedeploy_role.id
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Action = [
-          "autoscaling:*",
-          "ec2:DescribeInstances",
-          "cloudwatch:PutMetricData"
-        ],
-        Resource = "*"
-      }
-    ]
-  })
-}
 
 # CodePipeline Role
 resource "aws_iam_role" "codepipeline_role" {
