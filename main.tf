@@ -24,6 +24,7 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
   }
 }
 
+
 resource "aws_s3_bucket_public_access_block" "public_access" {
   bucket = aws_s3_bucket.my_terraform_bucket.id
   block_public_acls  = false
@@ -91,6 +92,43 @@ resource "aws_iam_role_policy" "codebuild_policy" {
     ]
   })
 }
+
+
+# code deploy
+resource "aws_iam_role" "codedeploy_role" {
+  name = "CodeDeployServiceRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect = "Allow",
+      Principal = {
+        Service = "codedeploy.amazonaws.com"
+      },
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "codedeploy_policy" {
+  name   = "CodeDeployPolicy"
+  role   = aws_iam_role.codedeploy_role.id
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "autoscaling:*",
+          "ec2:DescribeInstances",
+          "cloudwatch:PutMetricData"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 
 
 # CodePipeline Role
